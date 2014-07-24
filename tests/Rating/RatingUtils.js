@@ -697,9 +697,8 @@ RatingUtils.prototype = (function () {
             LiveUnit.Assert.areEqual(Helper.translateCSSValue("display", "inline-flex"), ratingControlStyle.getPropertyValue("display"), "Overall element should be a flex box");
 
             // Don't test touch action if it isn't supported
-            var touchActionSupported = "touchAction" in document.documentElement.style;
-            if (!touchActionSupported)
-                touchActionSupported = "msTouchAction" in document.documentElement.style;
+            var touchActionSupported = "touchAction" in document.documentElement.style ||
+                                       "msTouchAction" in document.documentElement.style
 
             if (touchActionSupported) {
                 LiveUnit.Assert.areEqual("auto", ratingControlStyle.getPropertyValue(Helper.translateCSSProperty("touch-action")), "Rating control should not block panning at its root element.");
@@ -737,7 +736,7 @@ RatingUtils.prototype = (function () {
                     // Verify current star is a partially displayed averageFull
                     if (expect === "disabled") {
                         LiveUnit.Assert.isTrue(this.classesMatch(this.parts.disabledFull, star.getAttribute("class")),
-                            "Verify correct class used for partial str " + (i + 1) + ". Expected: '" + this.parts.disabledFull + "', Actual: '" + star.getAttribute("class") + "'");
+                            "Verify correct class used for partial star " + (i + 1) + ". Expected: '" + this.parts.disabledFull + "', Actual: '" + star.getAttribute("class") + "'");
                         if (touchActionSupported) {
                             LiveUnit.Assert.areEqual("auto", starStyle.getPropertyValue(Helper.translateCSSProperty("touch-action")), "Disabled rating control should *not* block panning.  Verify star " + (i + 1) + " uses -ms-touch-action: auto.");
                         }
